@@ -96,23 +96,29 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
         children: [
           DefElevateButton(
             function: () async {
-              if (newPassword.text == confirmPassword.text) {
-                var auth = await AuthController.changePassword(
-                  ChangePassword(
-                    newPassword: newPassword.text,
-                    oldPassword: oldPassword.text,
-                    userName: email.text,
-                  ),
-                );
-                if (auth.isAuthanticated == true) {
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AuthCheck(),
+              try {
+                if (newPassword.text == confirmPassword.text) {
+                  var auth = await AuthController.changePassword(
+                    ChangePassword(
+                      newPassword: newPassword.text,
+                      oldPassword: oldPassword.text,
+                      userName: email.text,
                     ),
                   );
+                  if (auth.isAuthanticated == true) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthCheck(),
+                      ),
+                    );
+                  }
                 }
+              } catch (ex) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  DefValidator.defSnackBar(AuthModel(message: ex.toString())),
+                );
               }
             },
             text: StringManager.changePassword.tr,

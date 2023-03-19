@@ -224,14 +224,6 @@ class DefAppBar {
   static AppBar appbarHome(void Function()? press) {
     return AppBar(
       actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: press,
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart_outlined),
-          onPressed: () {},
-        ),
         Stack(
           children: [
             Center(
@@ -271,6 +263,14 @@ class DefAppBar {
               ),
             ),
           ],
+        ),
+        IconButton(
+          icon: const Icon(Icons.shopping_cart_outlined),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: press,
         ),
       ],
       elevation: 10,

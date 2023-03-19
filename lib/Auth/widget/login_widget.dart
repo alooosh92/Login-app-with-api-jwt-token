@@ -99,24 +99,30 @@ class _LoginWidgetState extends State<LoginWidget> {
       ],
       button: DefElevateButton(
         function: () async {
-          var auth = await AuthController.login(
-            User(
-              userName: email.text,
-              password: password.text,
-            ),
-          );
-          if (auth.isAuthanticated == true) {
-            // ignore: use_build_context_synchronously
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AuthCheck(),
+          try {
+            var auth = await AuthController.login(
+              User(
+                userName: email.text,
+                password: password.text,
               ),
             );
-          } else {
-            // ignore: use_build_context_synchronously
+            if (auth.isAuthanticated == true) {
+              // ignore: use_build_context_synchronously
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AuthCheck(),
+                ),
+              );
+            } else {
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                DefValidator.defSnackBar(auth),
+              );
+            }
+          } catch (ex) {
             ScaffoldMessenger.of(context).showSnackBar(
-              DefValidator.defSnackBar(auth),
+              DefValidator.defSnackBar(AuthModel(message: ex.toString())),
             );
           }
         },

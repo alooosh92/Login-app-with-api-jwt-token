@@ -43,14 +43,20 @@ class ForgetPasswordWidget extends StatelessWidget {
       ],
       button: DefElevateButton(
         function: () async {
-          var auth = await AuthController.forgetPassword(email.text);
-          if (auth == true) {
-            // ignore: use_build_context_synchronously
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ),
+          try {
+            var auth = await AuthController.forgetPassword(email.text);
+            if (auth == true) {
+              // ignore: use_build_context_synchronously
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+              );
+            }
+          } catch (ex) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              DefValidator.defSnackBar(AuthModel(message: ex.toString())),
             );
           }
         },

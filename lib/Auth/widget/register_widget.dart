@@ -103,27 +103,33 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       ],
       button: DefElevateButton(
         function: () async {
-          if (password.text == confirmPassword.text) {
-            var auth = await AuthController.register(
-              User(
-                userName: email.text,
-                password: password.text,
-              ),
-            );
-            if (auth.isAuthanticated == true) {
-              // ignore: use_build_context_synchronously
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AuthCheck(),
+          try {
+            if (password.text == confirmPassword.text) {
+              var auth = await AuthController.register(
+                User(
+                  userName: email.text,
+                  password: password.text,
                 ),
               );
-            } else {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(
-                DefValidator.defSnackBar(auth),
-              );
+              if (auth.isAuthanticated == true) {
+                // ignore: use_build_context_synchronously
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AuthCheck(),
+                  ),
+                );
+              } else {
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                  DefValidator.defSnackBar(auth),
+                );
+              }
             }
+          } catch (ex) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              DefValidator.defSnackBar(AuthModel(message: ex.toString())),
+            );
           }
         },
         text: StringManager.register.tr,
