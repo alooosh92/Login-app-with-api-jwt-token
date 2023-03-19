@@ -111,11 +111,17 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               ),
             );
             if (auth.isAuthanticated == true) {
+              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AuthCheck(),
                 ),
+              );
+            } else {
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                DefValidator.defSnackBar(auth),
               );
             }
           }

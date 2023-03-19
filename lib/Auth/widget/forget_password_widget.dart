@@ -45,6 +45,7 @@ class ForgetPasswordWidget extends StatelessWidget {
         function: () async {
           var auth = await AuthController.forgetPassword(email.text);
           if (auth == true) {
+            // ignore: use_build_context_synchronously
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

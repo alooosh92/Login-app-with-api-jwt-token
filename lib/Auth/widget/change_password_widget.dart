@@ -4,7 +4,6 @@ import 'package:login/Auth/screen/auth_check.dart';
 import 'package:login/res/color_manager.dart';
 import 'package:login/res/string_manager.dart';
 import '../model/auth_model.dart';
-import '../screen/login_screen.dart';
 import 'default_widget.dart';
 
 String pass3 = "";
@@ -75,13 +74,6 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
           hidden: !hidd,
           validator: DefValidator.confirmPassword(),
         ),
-        // DefAccontOptian(
-        //     color: ColorManager.liteBlackColor,
-        //     function: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //     size: 15,
-        //     text: StringManager.canselTheProcess.tr),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -113,6 +105,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                 );
                 if (auth.isAuthanticated == true) {
+                  // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

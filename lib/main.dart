@@ -4,7 +4,6 @@ import 'package:login/res/localizations_manager.dart';
 import 'package:login/res/routes_manager.dart';
 import 'package:login/res/theme_manager.dart';
 import 'Auth/screen/auth_check.dart';
-import 'Auth/screen/setting_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,9 +29,7 @@ class MyApp extends StatelessWidget {
       //Theme
       theme: AllThemeManager.themeData,
       //Home
-      home: const Scaffold(
-        body: AuthCheck(),
-      ),
+      home: const AuthCheck(),
     );
   }
 }

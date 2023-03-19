@@ -37,7 +37,7 @@ class AuthWidget extends StatelessWidget {
           decoration: boxDecoration(secandColor, shadowColor, radius),
           height: height,
           width: width,
-          child: widget,
+          child: SafeArea(child: widget),
         ),
       ),
     );

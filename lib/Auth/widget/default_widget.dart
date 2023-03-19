@@ -58,6 +58,22 @@ class DefValidator {
       return null;
     };
   }
+
+  static SnackBar defSnackBar(AuthModel auth) {
+    return SnackBar(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      content: Center(
+        child: (Text(
+          auth.message == null ? 'Erorr' : auth.message!,
+          style: const TextStyle(
+            color: ColorManager.fullBlack,
+            fontSize: 10,
+          ),
+        )),
+      ),
+    );
+  }
 }
 
 class DefElevateButton extends StatelessWidget {
