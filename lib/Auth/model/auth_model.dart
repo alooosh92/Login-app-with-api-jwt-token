@@ -124,6 +124,8 @@ class AuthController {
         );
         return authModel;
       }
+    } else {
+      return AuthModel(message: response.reasonPhrase, isAuthanticated: false);
     }
     return AuthModel(message: "Error", isAuthanticated: false);
   }
@@ -152,7 +154,9 @@ class AuthController {
         return authModel;
       }
     }
-    return AuthModel(message: "Error", isAuthanticated: false);
+    return AuthModel(
+        message: AuthModel.fromJson(jsonDecode(response.body)).message,
+        isAuthanticated: false);
   }
 
   static Future<AuthModel> changePassword(ChangePassword user) async {
@@ -176,8 +180,9 @@ class AuthController {
         authModel.roles,
       );
       return authModel;
+    } else {
+      return AuthModel(message: response.reasonPhrase, isAuthanticated: false);
     }
-    return AuthModel(message: "Error", isAuthanticated: false);
   }
 
   static Future<bool> forgetPassword(String email) async {
@@ -208,16 +213,9 @@ class AuthController {
         authModel.roles,
       );
       return authModel;
+    } else {
+      return AuthModel(message: response.reasonPhrase, isAuthanticated: false);
     }
-    return AuthModel(
-      email: '',
-      isAuthanticated: false,
-      message: '',
-      refreshToken: '',
-      refreshTokenExpireson: DateTime.now(),
-      roles: [],
-      token: '',
-    );
   }
 
   static Future<bool> revokeToken() async {
