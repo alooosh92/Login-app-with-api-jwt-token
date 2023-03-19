@@ -96,6 +96,16 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
         children: [
           DefElevateButton(
             function: () async {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: ColorManager.primaryColor,
+                    ),
+                  );
+                },
+              );
               try {
                 if (newPassword.text == confirmPassword.text) {
                   var auth = await AuthController.changePassword(
@@ -106,6 +116,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     ),
                   );
                   if (auth.isAuthanticated == true) {
+                    Navigator.of(context).pop();
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
@@ -116,6 +127,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   }
                 }
               } catch (ex) {
+                Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   DefValidator.defSnackBar(AuthModel(message: ex.toString())),
                 );

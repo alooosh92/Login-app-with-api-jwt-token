@@ -99,6 +99,16 @@ class _LoginWidgetState extends State<LoginWidget> {
       ],
       button: DefElevateButton(
         function: () async {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: ColorManager.primaryColor,
+                ),
+              );
+            },
+          );
           try {
             var auth = await AuthController.login(
               User(
@@ -107,6 +117,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             );
             if (auth.isAuthanticated == true) {
+              Navigator.of(context).pop();
               // ignore: use_build_context_synchronously
               Navigator.pushReplacement(
                 context,
@@ -115,12 +126,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               );
             } else {
+              Navigator.of(context).pop();
               // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
                 DefValidator.defSnackBar(auth),
               );
             }
           } catch (ex) {
+            Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               DefValidator.defSnackBar(AuthModel(message: ex.toString())),
             );

@@ -103,6 +103,16 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       ],
       button: DefElevateButton(
         function: () async {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: ColorManager.primaryColor,
+                ),
+              );
+            },
+          );
           try {
             if (password.text == confirmPassword.text) {
               var auth = await AuthController.register(
@@ -112,6 +122,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 ),
               );
               if (auth.isAuthanticated == true) {
+                Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
                 Navigator.pushReplacement(
                   context,
@@ -120,6 +131,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                 );
               } else {
+                Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
                 ScaffoldMessenger.of(context).showSnackBar(
                   DefValidator.defSnackBar(auth),
@@ -127,6 +139,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               }
             }
           } catch (ex) {
+            Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               DefValidator.defSnackBar(AuthModel(message: ex.toString())),
             );

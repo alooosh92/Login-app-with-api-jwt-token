@@ -15,23 +15,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: DefAppBar.appbarHome(
-          () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const SearchWidget();
-              },
-            );
-          },
-        ),
-        bottomNavigationBar: const DefBottomNavigationBar(),
-        drawer: const SettingWidget(),
-        // ignore: prefer_const_constructors
-        body: HomeWidget(),
+    return Scaffold(
+      appBar: DefAppBar.appbarHome(
+        () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const SearchWidget();
+            },
+          );
+        },
       ),
+      bottomNavigationBar: const DefBottomNavigationBar(),
+      drawer: const SettingWidget(),
+      // ignore: prefer_const_constructors
+      body: HomeWidget(),
     );
   }
 }
@@ -44,7 +42,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(),
+      child: SafeArea(child: Container()),
     );
   }
 }
@@ -224,6 +222,14 @@ class DefAppBar {
   static AppBar appbarHome(void Function()? press) {
     return AppBar(
       actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: press,
+        ),
+        IconButton(
+          icon: const Icon(Icons.shopping_cart_outlined),
+          onPressed: () {},
+        ),
         Stack(
           children: [
             Center(
@@ -232,45 +238,37 @@ class DefAppBar {
                 onPressed: () {},
               ),
             ),
-            Visibility(
-              visible: true,
-              child: Positioned(
-                left: 5,
-                top: 7,
-                child: Container(
-                  width: 22,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    color: ColorManager.redColor,
-                    borderRadius: BorderRadiusDirectional.circular(50),
-                  ),
-                  child: Positioned(
-                    left: 0,
-                    bottom: 0,
-                    top: 0,
-                    right: 0,
-                    child: Center(
-                      child: Text(
-                        '4',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: StringManager.font.tr,
-                            color: ColorManager.whiteColor),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Visibility(
+            //   visible: true,
+            //   child: Positioned(
+            //     left: 5,
+            //     top: 7,
+            //     child: Container(
+            //       width: 22,
+            //       height: 20,
+            //       decoration: BoxDecoration(
+            //         color: ColorManager.redColor,
+            //         borderRadius: BorderRadiusDirectional.circular(50),
+            //       ),
+            //       child: Positioned(
+            //         left: 0,
+            //         bottom: 0,
+            //         top: 0,
+            //         right: 0,
+            //         child: Center(
+            //           child: Text(
+            //             '4',
+            //             style: TextStyle(
+            //                 fontSize: 12,
+            //                 fontFamily: StringManager.font.tr,
+            //                 color: ColorManager.whiteColor),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart_outlined),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: press,
         ),
       ],
       elevation: 10,
