@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:login/Auth/widget/default_widget.dart';
 import 'package:login/res/color_manager.dart';
 import 'package:login/res/string_manager.dart';
+import 'package:login/screen/deatils_screen.dart';
 import '../Auth/widget/setting_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,8 +42,117 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SafeArea(child: Container()),
+    return ListView.builder(
+      itemCount: gifts.length,
+      itemBuilder: (context, index) {
+        return GiftWidget(
+          id: gifts[index].id,
+          discreption: gifts[index].discreption,
+          giftName: gifts[index].giftName,
+          image: gifts[index].image,
+          prise: gifts[index].prise,
+          storNmae: gifts[index].storNmae,
+        );
+      },
+    );
+  }
+}
+
+class GiftWidget extends StatelessWidget {
+  const GiftWidget({
+    super.key,
+    required this.id,
+    required this.discreption,
+    required this.giftName,
+    required this.image,
+    required this.prise,
+    required this.storNmae,
+  });
+  final String id;
+  final String storNmae;
+  final String giftName;
+  final String discreption;
+  final String prise;
+  final String image;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DeatilsScreen(
+              id: id,
+            ),
+          ),
+        );
+      },
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(20),
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromARGB(255, 238, 209, 231),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          // color: ColorManager.primaryColor,
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 3, top: 3),
+                      margin: const EdgeInsets.all(0),
+                      child: DefText(
+                        text: storNmae,
+                        size: 25,
+                        color: ColorManager.primaryColor,
+                      ),
+                    ),
+                    DefText(text: giftName, size: 15),
+                    const DefText(text: 'وصف المنتج:', size: 15),
+                    DefText(text: discreption, size: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 187, 27, 147),
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, bottom: 3, top: 3),
+                          margin: const EdgeInsets.all(0),
+                          child: DefText(
+                            text: 'السعر:$prise ل.س',
+                            size: 15,
+                            color: ColorManager.whiteColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 5,
+            child: Image.asset(
+              image,
+              height: 150,
+              width: 150,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -282,3 +392,49 @@ class DefAppBar {
     );
   }
 }
+
+//
+//
+//list for test
+List<GiftWidget> gifts = [
+  const GiftWidget(
+    id: '1',
+    discreption: 'موبايل صنع عام 2022 رام 6 شاشة 6بوصة',
+    giftName: 'Mobile S22Ultra',
+    image: 'asset/images/mobile.png',
+    prise: '2500000',
+    storNmae: 'متجر ريبون',
+  ),
+  const GiftWidget(
+    id: '2',
+    discreption: 'سبيكر Mp3 صوت واضح وجودة عالية مع Led rgb',
+    giftName: 'سبيكر  Mp3',
+    image: 'asset/images/speaker.png',
+    prise: '17000',
+    storNmae: 'Number oun',
+  ),
+  const GiftWidget(
+    id: '3',
+    discreption: 'سماعات راسية لاسلكية تعمل نوع ممتاز',
+    giftName: 'شاومي',
+    image: 'asset/images/airpod.png',
+    prise: '45000',
+    storNmae: 'موبي ستور',
+  ),
+  const GiftWidget(
+    id: '4',
+    discreption: 'نظارات VR الممتازة من شركة شاومي',
+    giftName: 'شاومي',
+    image: 'asset/images/class.png',
+    prise: '278000',
+    storNmae: 'موبي ستور',
+  ),
+  const GiftWidget(
+    id: '5',
+    discreption: 'سماعات رأسية جيمر نوع ممتازط',
+    giftName: 'سماعات رأسية كيرياتيف',
+    image: 'asset/images/headset.png',
+    prise: '84000',
+    storNmae: 'متجر ريبون',
+  ),
+];
